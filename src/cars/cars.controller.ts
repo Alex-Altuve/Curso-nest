@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CarsService } from './cars.service';
 import { CreateCarDto } from './dto/create-car.dto';
+import { UpdateCarDto } from './dto/update-car.dto';
 
 // el controlador no maneja la logica del negocio, solo se encarga de escuchar y dar una respuesta
 
@@ -30,16 +31,13 @@ export class CarsController {
     @Patch(':id')
     updateCar( 
       @Param('id', ParseUUIDPipe) uuid: string,
-      @Body() data:any){
+      @Body() updateCarDto:UpdateCarDto){
 
-        return data;
+        return this.carsService.update(uuid, updateCarDto);
     }
 
     @Delete(':id')
     deleteCar(@Param('id',  ParseUUIDPipe) id: string){
-        return {
-            method: 'delete',
-            id: id
-        }
+        return this.carsService.delete(id);
     }
 }
