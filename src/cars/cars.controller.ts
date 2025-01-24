@@ -1,9 +1,11 @@
-
-import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CarsService } from './cars.service';
 import { CreateCarDto } from './dto/create-car.dto';
 
+// el controlador no maneja la logica del negocio, solo se encarga de escuchar y dar una respuesta
+
 @Controller('cars')
+//@UsePipes(ValidationPipe)
 export class CarsController {
     //la inyeccion de dependencias siempre se hace en el constructor
     constructor(
@@ -22,11 +24,13 @@ export class CarsController {
 
     @Post()
     createCar(@Body() createCarDto: CreateCarDto){
-        return createCarDto;
+        return this.carsService.create(createCarDto);
     }
 
     @Patch(':id')
-    updateCar(@Body() data:any){
+    updateCar( 
+      @Param('id', ParseUUIDPipe) uuid: string,
+      @Body() data:any){
 
         return data;
     }
