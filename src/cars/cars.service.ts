@@ -1,4 +1,4 @@
-/* eslint-disable prefer-const */
+
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { Car } from './interfaces/cars.interface';
 import {v4 as uuid } from 'uuid';

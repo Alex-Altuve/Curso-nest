@@ -2,9 +2,10 @@ import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post, UsePi
 import { CarsService } from './cars.service';
 import { CreateCarDto } from './dto/create-car.dto';
 import { UpdateCarDto } from './dto/update-car.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 // el controlador no maneja la logica del negocio, solo se encarga de escuchar y dar una respuesta
-
+@ApiTags('cars')
 @Controller('cars')
 //@UsePipes(ValidationPipe)
 export class CarsController {
