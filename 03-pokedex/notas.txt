@@ -1,0 +1,7 @@
+##puerto mi computadora: puerto del contenedor
+ports:
+    -27017:27017
+
+mi carpeta: con lo del imagen
+volumen:
+ - ./mongo:/data/db
