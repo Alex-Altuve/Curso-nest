@@ -9,6 +9,7 @@ import { SeedModule } from './seed/seed.module';
 
 @Module({
   imports: [
+    //esto esta activo para tener la pagina con el server estatico, se debe comentar para que funcione lo del swagger
     ServeStaticModule.forRoot({
       rootPath: join(__dirname,'..','public'),
       }),

@@ -101,3 +101,8 @@ export class SeedService {
     return 'Seed Executed';
   }
 }
+
+
+/// ponerlo si se usa el swagger
+,
+    "plugins": ["@nestjs/swagger"]
