@@ -7,6 +7,8 @@ import { Pokemon, PokemonSchema } from './entities/pokemon.entity';
 @Module({
   controllers: [PokemonController],
   providers: [PokemonService],
+  //mongoose module solucion profesor
+  exports: [PokemonService, MongooseModule],
   imports: [
     MongooseModule.forFeature([
       {
