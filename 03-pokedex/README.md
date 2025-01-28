@@ -27,5 +27,5 @@ docker- compose up -d
 ```
 
 ## Stack usado
-* MongoDB
+* MongoDB v5.0
 * Nest
