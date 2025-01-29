@@ -9,6 +9,7 @@ volumen:
 dockerfile
 copiar mis directorios (.) a mi /app (workdir elegido) en mi contenedor .
 
+
 dockercompose ylm
  restart: always (si se apaga o algo se vuelve a levantar)
  web:
@@ -118,3 +119,16 @@ export class SeedService {
 /// ponerlo si se usa el swagger
 ,
     "plugins": ["@nestjs/swagger"]
+
+esto se pone en el main
+ //para verlo desde mi swagger
+  const config = new DocumentBuilder()
+  .setTitle("Car Dealership API")
+  .setDescription("The pokemon API description")
+  .setVersion("1.0")
+  .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup("docs", app, document);
+
+
+  //// el validation schema con JOi valida que estan configuradas las variables de entorno como se espera que deben ir y sino estan te da los errores en consola 
