@@ -6,6 +6,18 @@ mi carpeta: con lo del imagen
 volumen:
  - ./mongo:/data/db
 
+dockerfile
+copiar mis directorios (.) a mi /app (workdir elegido) en mi contenedor .
+
+dockercompose ylm
+ restart: always (si se apaga o algo se vuelve a levantar)
+ web:
+    build: 
+      context: . (solo si el dockerfile esta en la misma ruta que el docker-compose sino colocar la ruta en donde se encuente este dockerfile)
+      dockerfile: Dockerfile
+
+# add app
+COPY . .
 
  seccion 8: seed y paginacion
 
