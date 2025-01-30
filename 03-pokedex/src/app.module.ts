@@ -26,4 +26,8 @@ import { JoiValidationSchema } from './config/joi.validation';
     PokemonModule, CommonModule, SeedModule,
   ],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(){
+    console.log('App running in', process.env.PORT);
+  }
+}

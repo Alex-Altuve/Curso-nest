@@ -1,0 +1,9 @@
+#Carpetas a ignorar al momento de copiar las cosas en el directorio de la app de docjer
+
+dist/
+node_modules/
+.gitignore
+
+
+.git/
+*.txt

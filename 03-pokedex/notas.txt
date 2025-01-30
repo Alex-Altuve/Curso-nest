@@ -132,3 +132,31 @@ esto se pone en el main
 
 
   //// el validation schema con JOi valida que estan configuradas las variables de entorno como se espera que deben ir y sino estan te da los errores en consola 
+
+
+
+  /// Dockerfile version simple
+  #Dockerfile con NPM
+FROM node:23-alpine3.20
+# Set working directory
+RUN mkdir -p /var/www/pokedex
+WORKDIR /var/www/pokedex
+
+# Copiar el directorio y su contenido
+COPY . ./var/www/pokedex
+COPY package.json tsconfig.json tsconfig.build.json /var/www/pokedex/
+RUN npm install --prod
+RUN npm build
+
+
+# Dar permiso para ejecutar la applicación
+RUN adduser --disabled-password pokeuser
+RUN chown -R pokeuser:pokeuser /var/www/pokedex
+USER pokeuser
+
+# Limpiar el caché
+RUN npm cache clean --force
+
+EXPOSE 3000
+
+CMD [ "npm","start" ]
