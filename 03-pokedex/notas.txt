@@ -160,3 +160,12 @@ RUN npm cache clean --force
 EXPOSE 3000
 
 CMD [ "npm","start" ]
+
+/////////////
+TypeOrmModule.forRoot({
+    type: 'mongodb',
+    host: process.env.DB_HOST, // localhost
+    database: process.env.DB_NAME,
+    autoLoadEntities: true,
+    synchronize: true, //! remove when production!!
+}),
