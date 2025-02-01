@@ -33,6 +33,13 @@ export class Product {
     gender:string;
     
     //tags
+    @Column('text', {
+        array: true,
+        default: [],
+        nullable: true
+    })
+    tags: string[];
+
     //images
     
     ///before insert
