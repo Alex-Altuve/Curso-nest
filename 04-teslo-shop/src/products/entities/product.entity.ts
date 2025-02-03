@@ -1,4 +1,5 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { ProductImage } from "./product-image.entity";
 
 @Entity()
 export class Product {
@@ -40,8 +41,15 @@ export class Product {
     })
     tags: string[];
 
-    //images
-    
+    //images, esto es una relacion no una columna
+    @OneToMany(
+        () => ProductImage,
+        (productImage) => productImage.product,
+        {cascade: true, eager: true} //cascade: true means that when we save a product, it will also save the product image
+    )
+    images?: ProductImage[];
+
+
     ///before insert
     @BeforeInsert()
     checkSlugInsert(){
