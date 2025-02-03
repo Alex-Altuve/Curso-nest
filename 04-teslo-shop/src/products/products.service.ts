@@ -26,7 +26,7 @@ export class ProductsService {
     private readonly dataSource: DataSource
   ) {}
 
-  async create(createProductDto: CreateProductDto) {
+  async create(createProductDto: CreateProductDto){
     try{
       ///esta validacion esta en el entity
       // if(!createProductDto.slug){
