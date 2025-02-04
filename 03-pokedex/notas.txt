@@ -169,3 +169,6 @@ TypeOrmModule.forRoot({
     autoLoadEntities: true,
     synchronize: true, //! remove when production!!
 }),
+
+
+las dependencia @types algo son de desarollo no de produccion 

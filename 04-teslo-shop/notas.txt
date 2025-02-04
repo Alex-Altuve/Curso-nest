@@ -1,0 +1,21 @@
+para validar que sea un tipo de archivo en especifico se puede usar el parpepipefile de esta forma
+
+@Post('product')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadProductImage(@UploadedFile(
+    new ParseFilePipeBuilder()
+    .addFileTypeValidator({
+      fileType: /(jpg|jpeg|png)$/,
+    })
+    .build({
+      errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY
+    })
+) file: Express.Multer.File) {
+    return {
+      filname: file.originalname
+    };
+  }
+}
+function addFileTypeValidator(arg0: { fileType: RegExp; }) {
+  throw new Error('Function not implemented.');
+}
