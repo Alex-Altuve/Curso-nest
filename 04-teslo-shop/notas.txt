@@ -19,3 +19,16 @@ para validar que sea un tipo de archivo en especifico se puede usar el parpepipe
 function addFileTypeValidator(arg0: { fileType: RegExp; }) {
   throw new Error('Function not implemented.');
 }
+
+para crear la parte de los roles con un dto
+ @Column({
+        type: 'enum',
+        enum: Role,
+        default: Role.USER, // Valor por defecto
+    })
+
+    asi en el dto
+
+    @IsNotEmpty()
+    @IsEnum(Role) // Valida que el valor sea uno de los definidos en el enum
+    role: Role;

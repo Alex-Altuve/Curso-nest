@@ -9,14 +9,15 @@ export class User {
     @Column('text',{unique: true})
     email: string;
 
-    @Column('text')
+    ///esto del select es que si haces un select con el FindOneBy y no quieres que te regrese la contraseña
+    @Column('text', {select : false})
     password: string;
 
     @Column('text')
     fullName: string;
 
-    @Column('bool')
-    isActivo: boolean;
+    @Column('bool',{default: true})
+    isActive: boolean;
 
     @Column('text', {array: true, default: ['user']})
     // @Column({

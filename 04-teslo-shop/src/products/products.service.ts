@@ -13,7 +13,7 @@ import { log } from 'console';
 
 @Injectable()
 export class ProductsService {
-
+  //esto es para mostrar los errores en consola como un log
   private readonly logger = new Logger('ProductsService');
   constructor(
     
@@ -22,7 +22,8 @@ export class ProductsService {
     
     @InjectRepository(ProductImage)
     private readonly productImageRepository: Repository<ProductImage>,
-
+    
+    /// esto es para el query runner
     private readonly dataSource: DataSource
   ) {}
 
