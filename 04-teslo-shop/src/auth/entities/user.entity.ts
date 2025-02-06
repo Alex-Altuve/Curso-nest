@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('users')
 export class User {
@@ -9,7 +9,7 @@ export class User {
     @Column('text',{unique: true})
     email: string;
 
-    ///esto del select es que si haces un select con el FindOneBy y no quieres que te regrese la contraseña
+    /// * * esto del select es que si haces un select con el FindOneBy y no quieres que te regrese la contraseña
     @Column('text', {select : false})
     password: string;
 
@@ -26,5 +26,14 @@ export class User {
     //     default: Role.USER, // Valor por defecto
     // })
     roles: string[];
+    
+    @BeforeInsert()
+    checkFiledsBeforeInsert(){
+        this.email = this.email.toLowerCase().trim();
+    }
 
+    @BeforeUpdate()
+    checkFiledsBeforeUpdate(){
+        this.checkFiledsBeforeInsert();
+    }
 }

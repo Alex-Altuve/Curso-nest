@@ -32,3 +32,42 @@ para crear la parte de los roles con un dto
     @IsNotEmpty()
     @IsEnum(Role) // Valida que el valor sea uno de los definidos en el enum
     role: Role;
+
+/// para la authenticacion
+se descargan los siguientes paquetes
+ npm install  @nestjs/passport passport
+ npm install  @nestjs/jwt passport-jwt
+ npm install -D @types/passport-jwt
+
+
+ /// Nota explicacion de como el guard usa el jwt de ***JwtStrategy extends PassportStrategy(Strategy)***
+
+Guard lo busca en los Providers definidos en el Modulo y que extienden de JwtStrategy.
+
+
+
+Resumen. El Guard encuentra el JwtStrategy customizado porque este último hereda de JwtStrategy, porque esta definido como Injectable, porque esta definido en el Provider del modulo y porque en el Passport se definió que la estrategia es Jwt.
+
+
+
+Por eso Fernando hace mucho énfasis en, esto es un Injectable, los inyectable son Provider, si lo usaras en otro modulo debes ponerlo en export, si usaras algo de otro modulo debes importar dicho modulo, y que en principio los módulos deben ser autosuficientes, y limitarse a una funcionalidad específica, osea, desacoplado, a menos que necesites hacer uso del  beneficio de consumir una tarea o servicio que sea propio de otro mudulo.
+
+
+
+a continuación detalles de las configuraciones del JwtStrategy.
+
+
+
+1 La configuración del Passport define que se usará un método de autenticacion y se define que la estrategia será 'jwt'.
+
+
+
+2 Luego se configura la estrategia JwtStrategy y se definen algunos parámetros como la duración y demás.
+
+
+
+Por otro lado, Al usar el Guard, este encuentra el Passport configurado y la Strategy configurada que debe ser la misma que se definió en el Passport.
+
+
+ 
+Ahora bien, ¿Como sabe el Guard cual es la validación o si existe una?, Es simple. El Guard usa una validación por defect que únicamente verifica que el jwt es válido con la jwt_secret que se definió en el Strategy, pero' ¿como sabe el Guard que definimos una validación personalizada, que adicional al a los datos del jwt, también agrega un User en las propiedades del Request? Simple. Es porque existe un Provider que hereda de JwtStrategy, osea que el Guard siempre tendrá acceso y usará los Strategy definidos en los Providers que sean el mismo que se definió en el Passport y el Strategy
