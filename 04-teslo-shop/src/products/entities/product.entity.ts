@@ -1,5 +1,6 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { ProductImage } from "./product-image.entity";
+import { User } from "src/auth/entities/user.entity";
 
 @Entity({'name': 'products'})
 export class Product {
@@ -46,10 +47,16 @@ export class Product {
         () => ProductImage,
         (productImage) => productImage.product,
         {cascade: true, eager: true} //cascade: true means that when we save a product, it will also save the product image
+        // el eager funciona para que cuando hagamos un select de un producto nos traiga las imagenes (carge las relaciones)
     )
     images?: ProductImage[];
 
-
+    @ManyToOne(
+        ()=> User,
+        (user) => user.product,
+        {eager: true}
+    )
+    user: User;
     ///before insert
     @BeforeInsert()
     checkSlugInsert(){

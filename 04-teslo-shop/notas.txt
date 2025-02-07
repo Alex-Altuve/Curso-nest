@@ -71,3 +71,9 @@ Por otro lado, Al usar el Guard, este encuentra el Passport configurado y la Str
 
  
 Ahora bien, ¿Como sabe el Guard cual es la validación o si existe una?, Es simple. El Guard usa una validación por defect que únicamente verifica que el jwt es válido con la jwt_secret que se definió en el Strategy, pero' ¿como sabe el Guard que definimos una validación personalizada, que adicional al a los datos del jwt, también agrega un User en las propiedades del Request? Simple. Es porque existe un Provider que hereda de JwtStrategy, osea que el Guard siempre tendrá acceso y usará los Strategy definidos en los Providers que sean el mismo que se definió en el Passport y el Strategy
+
+
+//// para hacer la autorizacion y autenticacion
+1. Hacer el user-role.guard
+2. Hacer el decorador role-RoleProtected (este llamara al user-role.guard y el AuthGuard())
+3. LLamar el decorador del role-protected y listo

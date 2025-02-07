@@ -9,6 +9,7 @@ import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import {validate as isUUID} from 'uuid';
 import { ProductImage, Product } from './entities';
 import { log } from 'console';
+import { User } from 'src/auth/entities/user.entity';
 
 
 @Injectable()
@@ -27,7 +28,7 @@ export class ProductsService {
     private readonly dataSource: DataSource
   ) {}
 
-  async create(createProductDto: CreateProductDto){
+  async create(createProductDto: CreateProductDto, user: User){
     try{
       ///esta validacion esta en el entity
       // if(!createProductDto.slug){
@@ -45,7 +46,8 @@ export class ProductsService {
    
       const product = this.productRepository.create({
         ... productDetails,
-        images: images.map(image=> this.productImageRepository.create({url: image}) )
+        images: images.map(image=> this.productImageRepository.create({url: image}) ),
+        user: user
       });
       await this.productRepository.save(product);
       return {...product, images};
@@ -111,7 +113,7 @@ export class ProductsService {
     }
   }
 
-  async update(id: string, updateProductDto: UpdateProductDto) {
+  async update(id: string, updateProductDto: UpdateProductDto, user: User) {
     const {images, ...toUpdate} = updateProductDto;
     
     // el preload es para que si no existe el id no lo cree, prepara ese objeto para poder actualizarlo
@@ -138,7 +140,7 @@ export class ProductsService {
       //   product.images = await this.productImageRepository.findBy({product: {id}});
       // }
 
-    
+      product.user = user;
       await queryRunner.manager.save(product);
       await queryRunner.commitTransaction();
       await queryRunner.release();

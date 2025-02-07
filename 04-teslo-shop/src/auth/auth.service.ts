@@ -43,6 +43,13 @@ export class AuthService {
     }
   }
 
+  async checkAuthStatus(user: User){
+    return {
+      ...user, 
+      token: this.getJwtToker({id: user.id})
+    };
+  }
+
   async login(loginUserDto: LoginUserDto){
     const { email, password } = loginUserDto;
     const user = await this.userRepository.findOne({

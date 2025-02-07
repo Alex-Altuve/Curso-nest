@@ -2,12 +2,12 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Headers, 
 import { AuthService } from './auth.service';
 import { CreateUserDto, LoginUserDto } from './dto';
 import { AuthGuard } from '@nestjs/passport';
-import { GetUser } from './decorators/get-user.decorators';
-import { User } from './entities/user.entity';
-import { RawHeaders } from './decorators/get-rawHeaders.decorators';
 import { IncomingHttpHeaders } from 'http';
-import { UserRoleGuard } from './guards/user-role/user-role.guard';
 
+import { User } from './entities/user.entity';
+import { Auth,RoleProtected,RawHeaders,GetUser } from './decorators';
+import { ValidRoles } from './interfaces';
+import { UserRoleGuard } from './guards/user-role/user-role.guard';
 
 
 @Controller('auth')
@@ -23,6 +23,15 @@ export class AuthController {
   signIn(@Body() loginUserDto: LoginUserDto) {
     return this.authService.login(loginUserDto);
   }
+
+  @Get('check-auth-status')
+  @Auth()
+  checkAuthStatus( 
+    @GetUser() user: User
+  ){
+    return this.authService.checkAuthStatus(user);
+  }
+
 
   @Get('private')
   // * *  El guard -> AuthGuard() al ser de passport e indicar en el modulo de PassportModulo que se usaria jwt
@@ -49,11 +58,20 @@ export class AuthController {
     }
   }
 
+    //@SetMetadata('roles',['admin','super-user'])  //* * sin esto activo no tenemos el role en la meta data para poder usar ese Guard de UserRoleGuard
 
   @Get('private2')
-  @SetMetadata('roles',['admin','super-user'])
-  @UseGuards(AuthGuard(), UserRoleGuard)
+  @RoleProtected(ValidRoles.superUser, ValidRoles.admin) //* * con esto activo ya tenemos el role en la meta data para poder usar ese Guard de UserRoleGuard (nos ahorramos el @SetMetadata('roles',['admin''super-user']) ) -> autencicacion
+  @UseGuards(AuthGuard(),UserRoleGuard) //* *  autorizacion UserRoleGuard
   privateRoute2(
+    @GetUser() user: User
+  ){
+    return {ok: true, user};
+  }
+
+  @Get('private3')
+  @Auth(ValidRoles.admin)
+  privateRoute3(
     @GetUser() user: User
   ){
     return {ok: true, user};
