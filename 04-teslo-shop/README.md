@@ -35,6 +35,10 @@ $ npm run start:dev
 
 ![](public\products\images\BearerToken.png)
 
+3. Copiar la siguiente direccion en el navegador para visualizar el swagger 
 
+```
+http://localhost:3000/docs
+```
 
 
