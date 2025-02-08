@@ -33,7 +33,7 @@ $ npm run start:dev
 1. Logueate con un usuario 
 2. Copiar y pegar el token en la siguiente ventana
 
-![](public\products\images\BearerToken.png)
+![](public/products/images/BearerToken.png)
 
 3. Copiar la siguiente direccion en el navegador para visualizar el swagger 
 
