@@ -5,8 +5,12 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { filefilter, fileNamer } from './helpers/index';
 import { diskStorage } from 'multer';
 import { ConfigService } from '@nestjs/config';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Auth } from 'src/auth/decorators';
 
 
+@ApiTags('File- Get and Upload')
+@ApiBearerAuth()
 @Controller('files')
 export class FilesController {
   constructor(
@@ -15,6 +19,10 @@ export class FilesController {
   ) {}
 
   @Post('product')
+  @Auth()
+  @ApiResponse({status:201, description: 'file created successfully'}) 
+  @ApiResponse({status:400, description: 'Bad request'})
+  @ApiResponse({status:403, description: 'Forbidden. Token related'})
   @UseInterceptors(FileInterceptor('file',{
     fileFilter: filefilter,
     storage: diskStorage({
@@ -31,6 +39,10 @@ export class FilesController {
   }
 
   @Get('product/:imageName')
+  @Auth()
+  @ApiResponse({status:200, description: 'file send successfully'}) 
+  @ApiResponse({status:400, description: 'Bad request'})
+  @ApiResponse({status:403, description: 'Forbidden. Token related'})
   findProductImage(
     @Res() res: Response,
     @Param('imageName') imageName: string

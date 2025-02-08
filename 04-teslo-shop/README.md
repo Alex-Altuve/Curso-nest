@@ -15,6 +15,7 @@
 ```
 docker compose up -d
 
+```
 6. Ejecutar SEED
 ```
 http://localhost:3000/api/seed
@@ -26,6 +27,13 @@ http://localhost:3000/api/seed
 # watch mode
 $ npm run start:dev
 ```
+
+## Autenticacion 
+
+1. Logueate con un usuario 
+2. Copiar y pegar el token en la siguiente ventana
+
+![](public\products\images\BearerToken.png)
 
 
 

@@ -77,3 +77,12 @@ Ahora bien, ¿Como sabe el Guard cual es la validación o si existe una?, Es sim
 1. Hacer el user-role.guard
 2. Hacer el decorador role-RoleProtected (este llamara al user-role.guard y el AuthGuard())
 3. LLamar el decorador del role-protected y listo
+
+
+// * * para documentar con Swagger
+
+1. Usar ApiProperty()
+Para poder especificar que cosad quiero que aparezcan en la respuesta
+2. ApiResponse()
+Para indicar los tipos de respuesta y dar ejemplo de que espero como data a ingresar (con el type)
+ @ApiResponse({status:201, description: 'Product was created', type: Product})
