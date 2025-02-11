@@ -3,10 +3,12 @@ import { BadRequestException, CanActivate, ExecutionContext, ForbiddenException,
 import { Observable } from 'rxjs';
 import { User } from 'src/auth/entities/user.entity';
 import { META_ROLES } from 'src/auth/decorators/role-protected.decorator';
+import { JwtService } from "@nestjs/jwt"
 
 @Injectable()
 export class UserRoleGuard implements CanActivate {
   constructor(
+    private readonly JwtService: JwtService,
     private readonly reflector: Reflector
   ){}
   
@@ -29,21 +31,24 @@ export class UserRoleGuard implements CanActivate {
         return true;
       }
     }
-    
+
     const request = context.switchToHttp().getRequest();
     const authHeader = request.headers.authorization;
 
     if (!authHeader) {
       throw new UnauthorizedException('Authorization header not found');
     }
-
+    
     const [type, token] = authHeader.split(' ');
 
     if (type !== 'Bearer' || !token) {
       throw new UnauthorizedException('Invalid token format');
     }
-
-   throw new ForbiddenException(
+    //console.log(token);
+    const payload = this.JwtService.verify(token);
+    if(!payload) throw new UnauthorizedException('Invalid token');
+   
+    throw new ForbiddenException(
     `User ${user.fullName} need a valid rol: [${validRole}]`);
   }
 }

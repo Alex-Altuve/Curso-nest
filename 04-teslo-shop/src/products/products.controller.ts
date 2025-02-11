@@ -31,7 +31,7 @@ export class ProductsController {
   }
 
   @Get()
-  @Auth()
+  @Auth(ValidRoles.admin)
 
   @ApiResponse({status:200, description: 'Product was created', type: [Product]})
   findAll(@Query() paginationDto: PaginationDto) {
